@@ -19,12 +19,14 @@ KOMPLEKSITETI: O(log n)
 #include <string>
 using namespace std;
 
+//deklaroj strukturen e pemes binare
 typedef struct tree{
 	string word;
 	struct tree* right;
 	struct tree* left;
 };
 
+//kontrolloj nqs fjala gjendet me pare ne peme me rekursion
 bool alreadyExist(tree*root, string s){
 	if(root==NULL)return false;
 	if(root->word==s)return true;
@@ -36,6 +38,7 @@ bool alreadyExist(tree*root, string s){
 	return b;
 }
 
+//funksion qe deklaron elementin e ri dhe e shton ne peme
 tree* add(tree*root, string s){
 	tree*p;
 	p=new tree;
@@ -49,20 +52,23 @@ tree* add(tree*root, string s){
     tree*current = root;
     while(current!=NULL){
     	parent=current;
-    	if(current->word<=s)current=current->right;
+	//kontrollojme nese elementi ndodhet ne te majte apo ne te djathte te cdo elementi per te gjetur ku do vendoset
+    	if(current->word<s)current=current->right;
     	else{
     		current=current->left;
 		}
 	}
-		if(parent->word<=s){
+		if(parent->word<s){
 			parent->right=p;
 		}
 		else{
 			parent->left=p;
 		}
-    return root;
+    return root;//kthejme rrenjen
 }
 
+//funksion ndihmes per te hequr shenjat e pikesimit dhe per te bere fjalet lowercase 
+//ne menyre qe mos te perseriten ne forma te ndryshme
 string removePunct(string s){
 	int len=s.size();
 	for(int i=0; i<len; i++){
@@ -76,6 +82,7 @@ string removePunct(string s){
     return s;
 }
 
+//funksion per te printuar pemen ne menyre nderrendore
 void print(tree*root){
 	if(root==NULL)return;
 	print(root->left);
@@ -87,23 +94,28 @@ int main(int argc, char** argv) {
 	cout<<"Ky program merr emrin e nje skedari dhe formon nje fjalor me peme binare me te gjitha fjalet e skedarit te perseritura nga nje here."<<endl;
 	cout<<"Ju lutem jepni emrin e skedarit me prapashtesen .txt"<<endl;
 	
+	//deklaroj skedarin dhe marr emrin e skedarit input nga perdoruesi
 	string fileName, item;
 	cin>>fileName;
 	ifstream input;
 	input.open(fileName);
+	
+	//deklaroj pemen ku do ruhen fjalet e fjalorit
 	tree*root = new tree;
 	root = NULL;
-	if(!input.is_open()){
+	
+	if(!input.is_open()){//rasti i gabimit ne hapjen e skedarit
 		cout<<"Gabim ne hapjen e skedarit!"<<endl;
 	}
 	else{
-		while(input>>item){
-			item=removePunct(item);
-			if(!alreadyExist(root,item)){
-				root=add(root,item);
+		while(input>>item){//per sa kohe kemi fjale ne skedar
+			item=removePunct(item); //pastrojme fjalen
+			if(!alreadyExist(root,item)){ //nqs nuk gjendej me pare ne peme
+				root=add(root,item); //e shtojme ne peme
 			}
 		}
 	}
+	//printojme pemen
 	print(root);
 	return 0;
 }
