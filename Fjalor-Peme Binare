@@ -1,0 +1,109 @@
+/*
+Te shkruhet nje program qe lexon nje skedar text me madhesi te konsiderueshme dhe shfaq vetem njehere te gjitha
+fjalet e vecante qe shfaqen ne te. Gjate leximit te skedarit, programi duhet te krijoje nje fjalor me te gjitha fjalet qe
+jane shfaqur ne skedar. Sa here qe shfaqet nje fjale e re, dmth qe nuk ndodhet ne fjalor, programi duhet ta shtoje ate
+ne fjalor.
+
+ME PEME BINARE:
+
+KOMPLEKSITETI: O(log n)
+
+1. 100 fjale:
+2. 1000 fjale:
+3. 100000 fjale:
+4. 1000000 fjale:
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+typedef struct tree{
+	string word;
+	struct tree* right;
+	struct tree* left;
+};
+
+bool alreadyExist(tree*root, string s){
+	if(root==NULL)return false;
+	if(root->word==s)return true;
+	
+	bool a=alreadyExist(root->left,s);
+	if(a)return true;
+	
+	bool b=alreadyExist(root->right,s);
+	return b;
+}
+
+tree* add(tree*root, string s){
+	tree*p;
+	p=new tree;
+    p->word=s;
+    p->right=NULL;
+    p->left=NULL;
+
+    if(root==NULL)return p;
+    
+    tree*parent = NULL;
+    tree*current = root;
+    while(current!=NULL){
+    	parent=current;
+    	if(current->word<=s)current=current->right;
+    	else{
+    		current=current->left;
+		}
+	}
+		if(parent->word<=s){
+			parent->right=p;
+		}
+		else{
+			parent->left=p;
+		}
+    return root;
+}
+
+string removePunct(string s){
+	int len=s.size();
+	for(int i=0; i<len; i++){
+        s[i]= (tolower(s[i]));
+        if (ispunct(s[i]))
+        {
+            s.erase(i--, 1);
+            len = s.size();
+        }
+    }
+    return s;
+}
+
+void print(tree*root){
+	if(root==NULL)return;
+	print(root->left);
+	cout<<root->word<<endl;
+	print(root->right);
+}
+
+int main(int argc, char** argv) {
+	cout<<"Ky program merr emrin e nje skedari dhe formon nje fjalor me peme binare me te gjitha fjalet e skedarit te perseritura nga nje here."<<endl;
+	cout<<"Ju lutem jepni emrin e skedarit me prapashtesen .txt"<<endl;
+	
+	string fileName, item;
+	cin>>fileName;
+	ifstream input;
+	input.open(fileName);
+	tree*root = new tree;
+	root = NULL;
+	if(!input.is_open()){
+		cout<<"Gabim ne hapjen e skedarit!"<<endl;
+	}
+	else{
+		while(input>>item){
+			item=removePunct(item);
+			if(!alreadyExist(root,item)){
+				root=add(root,item);
+			}
+		}
+	}
+	print(root);
+	return 0;
+}
