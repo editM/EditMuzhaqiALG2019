@@ -19,25 +19,28 @@ KOMPLEKSITETI: O(1)
 #include <string>
 using namespace std;
 
+//deklarimi i struktures se listes
 typedef struct list{
 	string word;
 	struct list* next;
 };
 
+//funksion ndihmes qe kontrollon nqs fjala eshte vendosur me pare ne liste/fjalor
 bool alreadyExist(list*head, string s){
 	list*control;
 	control = head;
 	while(control!=NULL){
-		if(control->word==s){
-		return true;
+		if(control->word==s){//nqs e gjejme
+		return true;//kthejme true
 	}
 		else{
-		control=control->next;
+		control=control->next;//ne te kundert vazhdojme me el. tjeter te listes
 	}
 	}
-	return false;
+	return false;//nese iteracioni perfundon dhe elementi nuk u gjet, kthejme false
 }
 
+//funksion qe shton fjalen ne koken e listes
 list* add(list*head, string s){
 	list*tmp;
 	tmp = new list;
@@ -46,6 +49,8 @@ list* add(list*head, string s){
 	head = tmp;
 }
 
+//funksion ndihmes per te hequr shenjat e pikesimit dhe per te bere fjalet lowercase 
+//ne menyre qe mos te perseriten ne forma te ndryshme
 string removePunct(string s){
 	int len=s.size();
 	for(int i=0; i<len; i++){
@@ -59,6 +64,7 @@ string removePunct(string s){
     return s;
 }
 
+//funksion per te printuar cdo element ne liste
 void print(list*head){
 	list*control;
 	control = head;
@@ -72,23 +78,28 @@ int main(int argc, char** argv) {
 	cout<<"Ky program merr emrin e nje skedari dhe formon nje fjalor me lista 1-drejtimore me te gjitha fjalet e skedarit te perseritura nga nje here."<<endl;
 	cout<<"Ju lutem jepni emrin e skedarit me prapashtesen .txt"<<endl;
 	
+	//deklaroj skedarin dhe marr emrin e skedarit input nga perdoruesi
 	string fileName, item;
 	cin>>fileName;
 	ifstream input;
 	input.open(fileName);
+	
+	//deklaroj listen ku do te ruhen fjalet e fjalorit
 	list*head = new list;
 	head = NULL;
-	if(!input.is_open()){
+	
+	if(!input.is_open()){//rasti i gabimit ne hapjen e skedarit
 		cout<<"Gabim ne hapjen e skedarit!"<<endl;
 	}
 	else{
-		while(input>>item){
-			item=removePunct(item);
-			if(!alreadyExist(head,item)){
-				head=add(head,item);
+		while(input>>item){//per sa kohe kemi fjale input nga skedari
+			item=removePunct(item);//"pastrojme" fjalen
+			if(!alreadyExist(head,item)){//nese fjala nuk gjendet ne liste
+				head=add(head,item);//e shtojme ne krye te listes
 			}
 		}
 	}
+	//kur skemi me fjale nga skedari, printojme listen
 	print(head);
 	return 0;
 }
