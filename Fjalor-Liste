@@ -1,0 +1,94 @@
+/*
+Te shkruhet nje program qe lexon nje skedar text me madhesi te konsiderueshme dhe shfaq vetem njehere te gjitha
+fjalet e vecante qe shfaqen ne te. Gjate leximit te skedarit, programi duhet te krijoje nje fjalor me te gjitha fjalet qe
+jane shfaqur ne skedar. Sa here qe shfaqet nje fjale e re, dmth qe nuk ndodhet ne fjalor, programi duhet ta shtoje ate
+ne fjalor.
+
+ME LISTE TE LIDHUR NJE DREJTIMORE:
+
+KOMPLEKSITETI: O(1)
+
+1. 100 fjale:
+2. 1000 fjale:
+3. 100000 fjale:
+4. 1000000 fjale:
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+typedef struct list{
+	string word;
+	struct list* next;
+};
+
+bool alreadyExist(list*head, string s){
+	list*control;
+	control = head;
+	while(control!=NULL){
+		if(control->word==s){
+		return true;
+	}
+		else{
+		control=control->next;
+	}
+	}
+	return false;
+}
+
+list* add(list*head, string s){
+	list*tmp;
+	tmp = new list;
+	tmp->word=s;
+	tmp->next=head;
+	head = tmp;
+}
+
+string removePunct(string s){
+	int len=s.size();
+	for(int i=0; i<len; i++){
+        s[i]= (tolower(s[i]));
+        if (ispunct(s[i]))
+        {
+            s.erase(i--, 1);
+            len = s.size();
+        }
+    }
+    return s;
+}
+
+void print(list*head){
+	list*control;
+	control = head;
+	while(control!=NULL){
+		cout<<control->word<<endl;
+		control=control->next;
+	}
+}
+
+int main(int argc, char** argv) {
+	cout<<"Ky program merr emrin e nje skedari dhe formon nje fjalor me lista 1-drejtimore me te gjitha fjalet e skedarit te perseritura nga nje here."<<endl;
+	cout<<"Ju lutem jepni emrin e skedarit me prapashtesen .txt"<<endl;
+	
+	string fileName, item;
+	cin>>fileName;
+	ifstream input;
+	input.open(fileName);
+	list*head = new list;
+	head = NULL;
+	if(!input.is_open()){
+		cout<<"Gabim ne hapjen e skedarit!"<<endl;
+	}
+	else{
+		while(input>>item){
+			item=removePunct(item);
+			if(!alreadyExist(head,item)){
+				head=add(head,item);
+			}
+		}
+	}
+	print(head);
+	return 0;
+}
