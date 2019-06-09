@@ -1,0 +1,196 @@
+/*
+Te shkruhet nje program qe lexon nje skedar text me madhesi te konsiderueshme dhe shfaq vetem njehere te gjitha
+fjalet e vecante qe shfaqen ne te. Gjate leximit te skedarit, programi duhet te krijoje nje fjalor me te gjitha fjalet qe
+jane shfaqur ne skedar. Sa here qe shfaqet nje fjale e re, dmth qe nuk ndodhet ne fjalor, programi duhet ta shtoje ate
+ne fjalor.
+
+ME PEME TE BALANCUAR:
+
+KOMPLEKSITETI: O(log n)
+
+1. 100 fjale:
+2. 1000 fjale:
+3. 100000 fjale:
+4. 1000000 fjale:
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+typedef struct tree{
+	string word;
+	struct tree* right;
+	struct tree* left;
+	int height;
+};
+
+bool alreadyExist(tree*root, string s){
+	if(root==NULL)return false;
+	if(root->word==s)return true;
+	
+	bool a=alreadyExist(root->left,s);
+	if(a)return true;
+	
+	bool b=alreadyExist(root->right,s);
+	return b;
+}
+
+int height(tree* p){  
+    if (p==NULL)return 0;
+    return p->height;
+}  
+
+
+int max(int a, int b){  
+    return (a > b)? a : b;  
+}  
+
+
+// A utility function to right rotate subtree rooted with y 
+tree* rightRotate(tree *y){  
+    tree* x = y->left;  
+    tree* T2 = x->right;  
+  
+    // Perform rotation  
+    x->right = y;  
+    y->left = T2;  
+  
+    // Update heights  
+    y->height = max(height(y->left), 
+                    height(y->right)) + 1;  
+    x->height = max(height(x->left), 
+                    height(x->right)) + 1;  
+  
+    // Return new root  
+    return x;  
+}  
+  
+// A utility function to left  
+// rotate subtree rooted with x  
+// See the diagram given above.  
+tree* leftRotate(tree* x){  
+    tree* y = x->right;  
+    tree* T2 = y->left;  
+  
+    // Perform rotation  
+    y->left = x;  
+    x->right = T2;  
+  
+    // Update heights  
+    x->height = max(height(x->left),     
+                    height(x->right)) + 1;  
+    y->height = max(height(y->left),  
+                    height(y->right)) + 1;  
+  
+    // Return new root  
+    return y;  
+}  
+  
+// Get Balance factor of node N  
+int getBalance(tree* p){  
+    if (p == NULL)return 0;  
+    return height(p->left) - height(p->right);  
+}  
+  
+// Recursive function to insert a key 
+// in the subtree rooted with node and 
+// returns the new root of the subtree.  
+tree* add(tree* root, string s){  
+    tree*p = new tree; 
+    p->word = s;
+    p->left = NULL;  
+    p->right = NULL;  
+    p->height = 1;
+    
+    /* 1. Perform the normal BST insertion */
+    if (root == NULL)return p;  
+  
+    if (s < root->word)  
+        root->left = add(root->left, s);  
+    else{
+        root->right = add(root->right, s);  
+    }
+    
+    /* 2. Update height of this ancestor node */
+    root->height = 1 + max(height(root->left),  
+                        height(root->right));  
+  
+    /* 3. Get the balance factor of this ancestor  
+        node to check whether this node became  
+        unbalanced */
+    int balance = getBalance(root);  
+  
+    // If this node becomes unbalanced, then  
+    // there are 4 cases  
+  
+    // Left Left Case  
+    if (balance > 1 && s < root->left->word)  
+        return rightRotate(root);  
+  
+    // Right Right Case  
+    if (balance < -1 && s > root->right->word)  
+        return leftRotate(root);  
+  
+    // Left Right Case  
+    if (balance > 1 && s > root->left->word){  
+        root->left = leftRotate(root->left);  
+        return rightRotate(root);  
+    }  
+  
+    // Right Left Case  
+    if (balance < -1 && s < root->right->word){  
+        root->right = rightRotate(root->right);  
+        return leftRotate(root);  
+    }  
+  
+    /* return the (unchanged) node pointer */
+    return root;  
+}  
+  
+  
+string removePunct(string s){
+	int len=s.size();
+	for(int i=0; i<len; i++){
+        s[i]= (tolower(s[i]));
+        if (ispunct(s[i]))
+        {
+            s.erase(i--, 1);
+            len = s.size();
+        }
+    }
+    return s;
+}
+
+void print(tree*root){
+	if(root==NULL)return;
+	print(root->left);
+	cout<<root->word<<endl;
+	print(root->right);
+}
+
+int main(int argc, char** argv) {
+	cout<<"Ky program merr emrin e nje skedari dhe formon nje fjalor me peme te balancuar me te gjitha fjalet e skedarit te perseritura nga nje here."<<endl;
+	cout<<"Ju lutem jepni emrin e skedarit me prapashtesen .txt"<<endl;
+	
+	string fileName, item;
+	cin>>fileName;
+	ifstream input;
+	input.open(fileName);
+	tree*root = new tree;
+	root = NULL;
+	if(!input.is_open()){
+		cout<<"Gabim ne hapjen e skedarit!"<<endl;
+	}
+	else{
+		while(input>>item){
+			item=removePunct(item);
+			if(!alreadyExist(root,item)){
+				root=add(root,item);
+			}
+		}
+	}
+	print(root);
+	return 0;
+}
