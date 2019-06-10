@@ -1,12 +1,12 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-public class WebCrawlerTest{
+public class WebCrawlerTest{//funksioni testues i programit
 	
     public static void main(String[] args) throws IOException{
-    	
-        WebCrawler spider = new WebCrawler();
+        WebCrawler spider = new WebCrawler(); //krijojme nje web crawler te ri
         
+	//marrim input linkun, thellesine dhe direktorine
         System.out.println("Jepni linkun e faqes e do kerkoni");
         Scanner sc = new Scanner(System.in);
         String URL = sc.next();
@@ -15,6 +15,9 @@ public class WebCrawlerTest{
         System.out.println("Jepni emrin e direktorise ku do vendosni skedarin me linket e zbuluara");
         String directory = sc.next();
         
+	//therrasim funksionin e kerkimit
         spider.search(URL,depth,directory);
+	
+	//pas perfundimit te funksionit nje skedar do te shfaqet ne direktorine e caktuar me listen e linkeve te gjetura
     }
 }
