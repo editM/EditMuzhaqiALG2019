@@ -1,3 +1,5 @@
+package webCrawl;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -35,7 +37,7 @@ public class WebCrawler{
           if(this.pagesToVisit.isEmpty())
           {
               currentURL = URL;
-              FileWriter fw = new FileWriter(directory+"results.txt", true);
+              FileWriter fw = new FileWriter(directory+".txt", true);
           	
       	    BufferedWriter bw = new BufferedWriter(fw);
       	    bw.write(URL);
