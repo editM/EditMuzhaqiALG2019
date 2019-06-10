@@ -17,12 +17,14 @@ public class WebCrawler{
  
   
 
-  /*
-  Funksioni kryesor qe do thirret ne main per kerkimin e linkeve.
-  @param URL - linku i fillimit
-  @param depth - thellesia e kerkimit
-  @param directory - direktoria ku do ruhet skedari me rezultatet
-  @throws IOException 
+  /**
+  *Funksioni kryesor qe do thirret ne main per kerkimin e linkeve.
+  *
+  *@param URL - linku i fillimit
+  *@param depth - thellesia e kerkimit
+  *@param directory - direktoria ku do ruhet skedari me rezultatet
+  *
+  *@throws IOException 
   */
   
   public void search(String URL, int depth, String directory) throws IOException{
