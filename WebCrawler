@@ -10,58 +10,51 @@ import java.util.Set;
 
 public class WebCrawler{
 	
-  private static final int MAX_PAGES_TO_SEARCH = 10;
-  private Set<String> visitedPages = new HashSet<String>();
-  private List<String> pagesToVisit = new LinkedList<String>();
+  private static final int MAX = 10; //vendos numrin maksimal te faqeve te cilave do iu kontrollojme cdo link.
+                                     //e heqim si parameter ose vendosim nje numer shume te madh nqs duam te vazhdojme per nje kohe te gjate
+  private Set<String> visitedPages = new HashSet<String>(); //nje set ku do vendosim faqet e vizituara
+  private List<String> pagesToVisit = new LinkedList<String>(); //nje liste me faqet qe na kane ngelur per te vizituar
  
   
 
-  /**
-   * Our main launching point for the Spider's functionality. Internally it creates spider legs
-   * that make an HTTP request and parse the response (the web page).
-   * 
-   * @param url
-   *            - The starting point of the spider
-   * @param searchWord
-   *            - The word or string that you are searching for
- * @throws IOException 
-   */
+  /*
+  Funksioni kryesor qe do thirret ne main per kerkimin e linkeve.
+  @param URL - linku i fillimit
+  @param depth - thellesia e kerkimit
+  @param directory - direktoria ku do ruhet skedari me rezultatet
+  @throws IOException 
+  */
+  
   public void search(String URL, int depth, String directory) throws IOException{
 	  
-      while(this.visitedPages.size() < MAX_PAGES_TO_SEARCH){
+      while(this.visitedPages.size() < MAX){//per sa kohe numri i faqeve qe kemi kerkuar nuk ka kaluar limitin
     	  
           String currentURL;
-          SpiderLeg leg = new SpiderLeg();
-          if(this.pagesToVisit.isEmpty())
-          {
+          SpiderLeg leg = new SpiderLeg(); //ndertojme nje crawler te ri
+	  
+          if(this.pagesToVisit.isEmpty()){ //nqs nga URL ku u nisem nuk kemi me faqe per te vizituar 
               currentURL = URL;
               FileWriter fw = new FileWriter(directory+".txt", true);
           	
       	    BufferedWriter bw = new BufferedWriter(fw);
-      	    bw.write(URL);
+      	    bw.write(URL); 
       	    bw.newLine();
-      	    bw.close();
-              this.visitedPages.add(URL);
+      	    bw.close(); //shtojme URLne e nisjes ne skedarin me URLte e vizituara
+              this.visitedPages.add(URL); //dhe ne setin me URL te vizituara
           }
-          else{
-        	  
-              currentURL = this.nextURL();
+	  
+          else{  
+              currentURL = this.nextURL(); //perndryshe vazhdojme marrim linket e rradhes nga URL ku jemi
           }
-          leg.crawl(currentURL,directory); //
+          leg.crawl(currentURL,directory); //f
           
-          this.pagesToVisit.addAll(leg.getLinks());
+          this.pagesToVisit.addAll(leg.getLinks()); //shtojme linket e reja qe gjetem te lista me faqet qe do kene rradhen te vizitohen
       }
       System.out.println("\n Fundi i operimit: U vizituan " + this.visitedPages.size() + " faqe");
   }
 
 
-  /**
-   * Returns the next URL to visit (in the order that they were found). We also do a check to make
-   * sure this method doesn't return a URL that has already been visited.
-   * 
-   * @return
- * @throws IOException 
-   */
+ //funksion qe merr URL e rradhes per tu vizituar 
   private String nextURL() throws IOException{
 	  
       String nextURL;
