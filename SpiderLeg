@@ -23,11 +23,12 @@ public class SpiderLeg{
     File file = new File("file.txt");
 
 
-    /*Funksioni kryesor i programit.
-    Me ane te librarise Jsoup bejme kerkesen HTTP per URL perkatese dhe mbledhim te gjitha linket ne ate faqe.
-    @param URL - URL per tu vizituar
-    @param directory - direktoria ku do ruhet skedari
-    @return whether or not the crawl was successful
+    /*Funksioni kyc i programit.
+    *
+    *Me ane te librarise Jsoup bejme kerkesen HTTP per URL perkatese dhe mbledhim te gjitha linket ne ate faqe.
+    *@param URL - URL per tu vizituar
+    *@param directory - direktoria ku do ruhet skedari
+    *@return whether or not the crawl was successful
     */
     
     public boolean crawl(String URL, String directory){
