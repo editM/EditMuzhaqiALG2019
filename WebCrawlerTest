@@ -1,0 +1,22 @@
+package webCrawl;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class WebCrawlerTest{
+	
+    public static void main(String[] args) throws IOException{
+    	
+        WebCrawler spider = new WebCrawler();
+        
+        System.out.println("Jepni linkun e faqes e do kerkoni");
+        Scanner sc = new Scanner(System.in);
+        String URL = sc.next();
+        System.out.println("Jepni nivelin e thellesise");
+        int depth = sc.nextInt();
+        System.out.println("Jepni emrin e direktorise ku do vendosni skedarin me linket e zbuluara");
+        String directory = sc.next();
+        
+        spider.search(URL,depth,directory);
+    }
+}
