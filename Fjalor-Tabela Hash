@@ -28,6 +28,15 @@ typedef struct list{
 	struct list* next;
 };
 
+//funksioni per shtimin ne koken e listes
+list* add(list*head, string s){
+	list*tmp;
+	tmp = new list;
+	tmp->word=s;
+	tmp->next=head;
+	head = tmp;
+}
+
 //funksion ndihmes per te hequr shenjat e pikesimit dhe per te bere fjalet lowercase ne menyre qe mos te perseriten ne forma te ndryshme
 string removePunct(string s){
 	int len=s.size();
