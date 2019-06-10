@@ -13,43 +13,44 @@ import org.jsoup.select.Elements;
 
 public class SpiderLeg{
 	
-    // We'll use a fake USER_AGENT so the web server thinks the robot is a normal web browser.
-    private static final String USER_AGENT =
+    //Caktojme nje agjent kerkimi qe programi ti navigoje faqet si nje browser normal, pa nderhyre ne protokollin e faqeve
+    private static final String AGENT =
             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+	    
+    //deklarojme nje liste ku do ruajme linket dhe nje dokument ku do ruajme te dhenat HTML qe marrim
     private List<String> links = new LinkedList<String>();
     private Document htmlDocument;
     File file = new File("file.txt");
 
 
-    /**
-     * This performs all the work. It makes an HTTP request, checks the response, and then gathers
-     * up all the links on the page. Perform a searchForWord after the successful crawl
-     * 
-     * @param url
-     *            - The URL to visit
-     * @return whether or not the crawl was successful
-     */
+    /*Funksioni kryesor i programit.
+    Me ane te librarise Jsoup bejme kerkesen HTTP per URL perkatese dhe mbledhim te gjitha linket ne ate faqe.
+    @param URL - URL per tu vizituar
+    @param directory - direktoria ku do ruhet skedari
+    @return whether or not the crawl was successful
+    */
+    
     public boolean crawl(String URL, String directory){
-        try{
-        	
-            Connection connection = Jsoup.connect(URL).userAgent(USER_AGENT);
-            Document htmlDocument = connection.get();
+        try{	
+            Connection connection = Jsoup.connect(URL).userAgent(AGENT); //formojme nje lidhje me URL qe do kerkojme nepermjet agjentit
+            Document htmlDocument = connection.get(); //dokumenti ku do ruajme te dhenat e lidhjes
             this.htmlDocument = htmlDocument;
-            if(connection.response().statusCode() == 200){ // 200 is the HTTP OK status code
-                                                          // indicating that everything is great.
+	    
+            if(connection.response().statusCode() == 200){ //200 eshte kodi HTTP qe jep statusin OK - lidhja pati sukses
+	    
                 System.out.println("\n ~Duke vizituar URL nga faqja: " + URL);
             }
             
-            if(!connection.response().contentType().contains("text/html")){
+            if(!connection.response().contentType().contains("text/html")){ //nese faqja ku arritem nuk ka permbajtje text/html kthejme gabim
             	
                 System.out.println("!Error - Nuk ka permbajtje HTML ne kete faqe");
                 return false;
             }
             
-            Elements linksOnPage = htmlDocument.select("a[href]");
+            Elements linksOnPage = htmlDocument.select("a[href]"); //selektojme elementet linke (a[href] ne gjuhen html
             System.out.println("U gjeten (" + linksOnPage.size() + ") URL");
-            for(Element link : linksOnPage){
-            	
+	    
+            for(Element link : linksOnPage){ //per cdo element link qe gjetem nga faqja, e shtojme ate ne listen e linkeve te gjetura
             	FileWriter fw = new FileWriter(directory+".txt", true);
         	    BufferedWriter bw = new BufferedWriter(fw);
         	    bw.write(link.absUrl("href"));
