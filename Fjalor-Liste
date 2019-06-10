@@ -6,7 +6,8 @@ ne fjalor.
 
 ME LISTE TE LIDHUR NJE DREJTIMORE:
 
-KOMPLEKSITETI: O(1)
+KOMPLEKSITETI: O(1) i shtimit ne liste. Funksionet alreadyExist, print dhe removePunct e cojne kompleksitetin ne O(n) sepse 
+iterojne cdo element!!!
 
 1. 100 fjale: 0.09124s
 2. 1000 fjale: 0.2975s
