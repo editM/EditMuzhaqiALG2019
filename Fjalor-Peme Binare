@@ -8,10 +8,10 @@ ME PEME BINARE:
 
 KOMPLEKSITETI: O(log n)
 
-1. 100 fjale:
-2. 1000 fjale:
-3. 100000 fjale:
-4. 1000000 fjale:
+1. 100 fjale: 0.108s
+2. 1000 fjale: 0.3202s
+3. 100000 fjale: 2.166s
+4. 1000000 fjale: 18.81s
 */
 
 #include <iostream>
