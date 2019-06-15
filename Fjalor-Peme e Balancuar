@@ -7,11 +7,15 @@ ne fjalor.
 ME PEME TE BALANCUAR:
 
 KOMPLEKSITETI:
--Shtimi ne liste / add: 1+1+1+1+1 = O(1);
--Kontrolli a ekziston / alreadyExist: 1+1+n+(n-1)+1+(n-1) = 3n+1 = O(n);
--print: 1+1+n+n-1+n-1 = 3n = O(n);
+-Shtimi ne liste / add: 2+2+2+2+2+1+1+1+1+1+2logn+1+logn+1+2+logn+2+logn+2+logn+1+logn+2+logn+1+logn=9logn+27 = O(logn);
+-Kontrolli a ekziston / alreadyExist: 1+1+1+1+logn+1+1+logn+1=2logn+6 = O(logn);
+-kthimi lartesise ne peme: 1+1+1 = O(1);
+-gjetja max: 1+1+1= O(1);
+-rrotullimi / rotate: 2+2+2+2+logn+1+logn+1+1=2logn+11 = O(logn);
+-llogaritja e balances: 1+1+2logn = O(logn);
+-print: 1+1+logn+2+logn=2logn+3 = O(logn);
 -heqja e pikesimit dhe lowercase / removePunct: 2+n+(n-1)+(n-1)+1+1+1 = 3n+3 = O(n);
--main: 2+1+1+1+1+n*((3n+3)+(3n+1)+5)+3n = O(n^2)
+-main: 2+1+1+1+1+n*((3n+3)+(2logn+6)+9logn+27)+2logn+3 = O(n^2)
 
 1. 100 fjale: 0.0941s
 2. 1000 fjale: 0.3017s
