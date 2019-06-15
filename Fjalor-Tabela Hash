@@ -4,7 +4,7 @@ fjalet e vecante qe shfaqen ne te. Gjate leximit te skedarit, programi duhet te 
 jane shfaqur ne skedar. Sa here qe shfaqet nje fjale e re, dmth qe nuk ndodhet ne fjalor, programi duhet ta shtoje ate
 ne fjalor.
 
-ME TABELE HASH:
+ME TABELE HASH: EFEKTIVITETI ME I LARTE / KOHA E EKZEKUTIMIT ME E ULET
 
 KOMPLEKSITETI:
 -shtimi / add: 1+1+1+1+1 = O(1);
