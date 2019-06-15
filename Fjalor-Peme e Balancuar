@@ -6,7 +6,12 @@ ne fjalor.
 
 ME PEME TE BALANCUAR:
 
-KOMPLEKSITETI: O(log n)
+KOMPLEKSITETI:
+-Shtimi ne liste / add: 1+1+1+1+1 = O(1);
+-Kontrolli a ekziston / alreadyExist: 1+1+n+(n-1)+1+(n-1) = 3n+1 = O(n);
+-print: 1+1+n+n-1+n-1 = 3n = O(n);
+-heqja e pikesimit dhe lowercase / removePunct: 2+n+(n-1)+(n-1)+1+1+1 = 3n+3 = O(n);
+-main: 2+1+1+1+1+n*((3n+3)+(3n+1)+5)+3n = O(n^2)
 
 1. 100 fjale: 0.0941s
 2. 1000 fjale: 0.3017s
