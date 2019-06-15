@@ -6,7 +6,12 @@ ne fjalor.
 
 ME PEME BINARE:
 
-KOMPLEKSITETI: O(log n)
+KOMPLEKSITETI:
+-shtimi / add: 1+2+2+2+2+1+1+2+2+n+(n-1)+(n-1)+1+(n-1)+1+1+1+1=3n+17 = O(n);
+-alreadyExist: 1+1+1+1+1+logn+1+1+logn+1=2logn+8 = O(logn);
+-heqja e pikesimit / removePunct: 2+n+(n-1)+(n-1)+1+1+1=3n+3 = O(logn)
+-print: 1+1+logn+2+logn=2logn+3 = O(logn);
+-main: 2+1+1+1+1+n*((3n+3)+(2logn+8)+3n+17)+2logn+3 = O(n^2)
 
 1. 100 fjale: 0.108s
 2. 1000 fjale: 0.3202s
