@@ -15,7 +15,9 @@ Programi duhet te shmange ciklet e pafundme, dmth viziten e nje faqeje qe eshte 
 Psh. nese faqja www.fshn.edu.al permban link per tek faqja www.unitir.edu.al dhe kjo e fundit permban link per tek
 faqja www.fshn.edu.al atehere jemi ne kushtet e nje cikli te pafundem.
 
-KOMPLEKSITETI: O(n)
+KOMPLEKSITETI:
+-WebCrawlerTest: 2+1+2+2+1+2+1+2+(6n+142) = O(n);
+
 */
 
 import java.io.IOException;
