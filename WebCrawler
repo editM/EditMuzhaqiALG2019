@@ -1,7 +1,7 @@
 /*
 KOMPLEKSITETI:
 Spider: 2+2+2 = O(1);
-search: n+((n-1)+(n-1)+(n-1)+1+1+1+1+1+1+1+1)(logn+logn)=6nlogn+10logn+n = O(nlogn);
+search: 10*(1+2+1+2+2+1+1+1+1)+(6n+20)+1+1 = O(n)
 nextURL: 1+(n-1)+1+n+1+1=2n+3 = O(n);
 
 */
@@ -56,7 +56,7 @@ public class WebCrawler{
           else{  
               currentURL = this.nextURL(); //perndryshe vazhdojme marrim linket e rradhes nga URL ku jemi
           }
-          leg.crawl(currentURL,directory); //f
+          leg.crawl(currentURL,directory);
           
           this.pagesToVisit.addAll(leg.getLinks()); //shtojme linket e reja qe gjetem te lista me faqet qe do kene rradhen te vizitohen
       }
