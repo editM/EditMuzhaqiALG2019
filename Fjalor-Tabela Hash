@@ -6,7 +6,11 @@ ne fjalor.
 
 ME TABELE HASH:
 
-KOMPLEKSITETI: O(1)
+KOMPLEKSITETI:
+-shtimi / add: 1+1+1+1+1 = O(1);
+-hash: 1+1+2+1+n+(n-1)+1=2n+5 = O(n);
+-heqja e pikesimit / removePunct: 2+n+(n-1)+(n-1)+1+1+1=3n+3 = O(n);
+-main: 2+1+1+1+1+n*((3n+3)+(n)+1)+1+1+n+1+n*((2n+5)+1+5)+1+1+n*(1+1+1) = O(n^2)
 
 1. 100 fjale: 0.08s
 2. 1000 fjale: 0.2475s
